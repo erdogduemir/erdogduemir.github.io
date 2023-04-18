@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://erdogduemir.github.io/sugovern/sitemap.xml.gz
+Sitemap: /sitemap.xml.gz
