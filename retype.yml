@@ -1,8 +1,8 @@
 input: .
 output: .retype
-url: https://erdogduemir.github.io/sugovern
+url: # https://erdogduemir.github.io/sugovern
 branding:
-  title: Project Name
+  title: Emir Erdogdu
   label: Docs
 links:
 - text: Getting Started
