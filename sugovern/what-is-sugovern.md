@@ -8,6 +8,6 @@ tags: [sugovern]
 
 SUGovern is a decentralized voting platform to be used by university clubs. 
 
-##Decentralized
+## Decentralized
 
 SUGovern is used to create DAOs or Decentralized Autonomous Organizations. SUGovern uses a blockchain network for transparency and security.
