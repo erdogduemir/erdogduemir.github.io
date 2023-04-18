@@ -1,5 +1,5 @@
-input: /sugovern
-output: .retype
+input: ./sugovern
+output: ./sugovern/retype
 url:  https://erdogduemir.github.io/sugovern
 branding:
   title: SUGovern
