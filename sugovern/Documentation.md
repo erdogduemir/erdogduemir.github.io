@@ -1,18 +1,18 @@
-﻿Contracts
+﻿#Contracts
 
-Creator.sol
+##Creator.sol
 
 This file includes a createToken function which is used to create new tokens and receive their addresses.
 
 ![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.001.png)
 
-Migrations.sol
+##Migrations.sol
 
 This file contains the Migrations contract. The contract checks if the migration request is from the owner of the contract and if so completes the task.
 
 ![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.002.png)
 
-newFactory1.sol
+##newFactory1.sol
 
 This file contains the DAOFactory contract. This contract creates the Top DAO, which is the DAO that supervises all of it’s sub-DAO’s and mints 100 tokens to this factory.
 
@@ -44,7 +44,7 @@ The below function is used to get the address of the current DAO.
 
 ![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.010.jpeg)
 
-Token.sol
+##Token.sol
 
 The below function is used for transfer processes. The function checks the balance of the owner to make sure there are enough credits and gives an option to have a debt if balance is insufficient and modifies the balance amount accordingly.
 
