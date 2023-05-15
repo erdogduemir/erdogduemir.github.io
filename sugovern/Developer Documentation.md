@@ -3,7 +3,7 @@
 - Download and install node.js\
 node.js reference link: https://nodejs.org/en/download/
 
-- Download and install npm and yarn, you need to install npm to download yarn\
+- Download and install npm or yarn, you need to install npm to download yarn\
 yarn reference link: https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable \
 npm reference link: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
@@ -28,7 +28,7 @@ While deploying newFactory1.sol use the address of creator.sol.
 - Connecting to Front End:\
 The files that needs modification are found in the directory below.\
 “cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui\pages” In dao.js and index.js, the address of daoFactory should be typed in the statement where the daoFactoryContract is defined. In dao.js, line 114, and in index.js, line 180.\
-In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation.
+**In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation.**
 
 ## Contracts
 
@@ -36,13 +36,13 @@ In addition to this, in order to get YK privileges, the first admin of the Top D
 
 This file includes a createToken function which is used to create new tokens and receive their addresses.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.001.png)
+![](creator_sol.png)
 
 ### Migrations.sol
 
 This file contains the Migrations contract. The contract checks if the migration request is from the owner of the contract and if so completes the task.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.002.png)
+![](migrations_sol.png)
 
 ### newFactory1.sol
 
