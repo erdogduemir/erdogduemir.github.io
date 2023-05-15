@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737499975134">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737500333957">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737499975134" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737500333957" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737499975134" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737500333957" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737499975134" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737500333957" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -263,29 +263,29 @@ The contract is responsible for creating and managing proposals, and tracking vo
 <p>The contract contains several mappings and constants used for tracking and storing data. <br />
 These include:</p>
 <ul>
-<li><p>proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.</p>
+<li><p><code v-pre>proposals</code>: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.</p>
 </li>
-<li><p>votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.</p>
+<li><p><code v-pre>votes</code>: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.</p>
 </li>
-<li><p>tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.</p>
+<li><p><code v-pre>tokens_not_refunded</code>: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.</p>
 </li>
-<li><p>token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.</p>
+<li><p><code v-pre>token_amount_to_be_refunded</code>: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.</p>
 </li>
-<li><p>voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.</p>
+<li><p><code v-pre>voter_shares_to_be_given</code>: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.</p>
 </li>
-<li><p>yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.</p>
+<li><p><code v-pre>yk_shares_to_be_given</code>: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.</p>
 </li>
-<li><p>voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.</p>
+<li><p><code v-pre>voter_token</code>: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.</p>
 </li>
-<li><p>yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.</p>
+<li><p><code v-pre>yk_token</code>: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.</p>
 </li>
-<li><p>CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.</p>
+<li><p><code v-pre>CREATE_PROPOSAL_MIN_SHARE</code>: A constant that sets the minimum number of shares required to create a proposal.</p>
 </li>
-<li><p>VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.</p>
+<li><p><code v-pre>VOTING_PERIOD</code>: A constant that sets the duration of the voting period for proposals.</p>
 </li>
-<li><p>nextProposalId: An integer that tracks the ID for the next proposal to be created.</p>
+<li><p><code v-pre>nextProposalId</code>: An integer that tracks the ID for the next proposal to be created.</p>
 </li>
-<li><p>transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.</p>
+<li><p><code v-pre>transferLock</code>: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.</p>
 </li>
 </ul>
 <p>The constructor function initializes the DAO contract with the following parameters:</p>
@@ -326,7 +326,29 @@ These include:</p>
 </li>
 <li><p><code v-pre>withdraw_yk_tokens</code>: This external function allows a user to withdraw YK tokens from the DAO. The function takes in a parameter _amount, which specifies the amount of YK tokens to be withdrawn. The function checks whether the user has enough shares and transfers the specified amount of YK tokens from the DAO to the user. It also mints YK tokens for the DAO.</p>
 </li>
+<li><p><code v-pre>send_yk_tokens_to_address_yk</code>: This function sends YK tokens to a specified address. It takes in two parameters: <code v-pre>yk_candidate</code>, which is the address to send the YK tokens to, and <code v-pre>_amount</code>, which is the amount of YK tokens to send. It requires the caller to have YK privileges and updates the amount of YK tokens that will be given to the specified address.</p>
+</li>
+<li><p><code v-pre>send_yk_tokens_to_address_yk_directly</code>: This function sends YK tokens directly to a specified address from the DAO. It takes in two parameters: <code v-pre>yk_candidate</code>, which is the address to send the YK tokens to, and <code v-pre>_amount</code>, which is the amount of YK tokens to send. It requires the caller to have YK privileges and updates the amount of YK tokens that will be given to the specified address. In addition to this, it also mints YK tokens from the DAO.</p>
+</li>
+<li><p><code v-pre>send_voter_tokens_to_address_yk</code>: This function sends voter tokens to a specified address. It takes in two parameters: <code v-pre>voter_candidate</code>, which is the address to send the voter tokens to, and <code v-pre>_amount</code>, which is the amount of voter tokens to send. It requires the caller to have YK privileges and updates the amount of voter tokens that will be given to the specified address.</p>
+</li>
+<li><p><code v-pre>send_voter_tokens_to_address_yk_directly</code>: This function sends voter tokens directly to a specified address from the DAO. It takes in two parameters: <code v-pre>voter_candidate</code>, which is the address to send the voter tokens to, and <code v-pre>_amount</code>, which is the amount of voter tokens to send. It requires the caller to have YK privileges and updates the amount of voter tokens that will be given to the specified address. In addition to this, it also mints voter tokens from the DAO.</p>
+</li>
+<li><p><code v-pre>createProposal</code>: This function creates a new proposal. It takes in six parameters: <code v-pre>name</code>, which is the name of the proposal; <code v-pre>description</code>, which is the description of the proposal; <code v-pre>_options</code>, which is an array of vote options; <code v-pre>_options_num</code>, which is an array of corresponding vote option numbers; <code v-pre>_power</code>, which is the maximum vote power for the proposal; and <code v-pre>_type</code>, which is the type of the proposal (0 for normal, 1 for weighted). It requires the caller to have YK privileges and creates a new proposal with the specified parameters. It also updates the proposal count.</p>
+</li>
+<li><p><code v-pre>vote</code>: This function performs a non-weighted vote on a proposal. It takes in three parameters: <code v-pre>_proposalId</code>, which is the ID of the proposal; <code v-pre>_vote</code>, which is an array of vote options; and <code v-pre>_power</code>, which is an array of corresponding vote powers. It requires the caller to have voter privileges and updates the vote count for the specified proposal.</p>
+</li>
 </ul>
+<p>The code uses several Solidity concepts, such as function modifiers (<code v-pre>require</code> statements) and structs (<code v-pre>Proposal</code>), to ensure that the functions are secure and perform as intended.</p>
+<ul>
+<li><p><code v-pre>vote_power</code>: This function performs a weighted vote on a proposal. It takes three arguments: <code v-pre>_proposalId</code> (an unsigned integer representing the ID of the proposal), <code v-pre>_vote</code> (a string array representing the vote options), and <code v-pre>_power</code> (an unsigned integer array representing the corresponding vote powers). The function first checks if the voter has already voted, if they have enough shares to vote on the proposal, and if the voting period is still open. If all conditions are met, the function calculates the total power of the votes, checks that the total power does not exceed the proposal power, and then adds the vote powers to the corresponding proposal options. Finally, it updates the voter&#x27;s vote status and active voter lock for the proposal.</p>
+</li>
+<li><p><code v-pre>vote_power_weighted</code>: This function is similar to <code v-pre>vote_power</code>, but it includes an additional argument <code v-pre>weight</code>, which is a uint representing the weight to apply to the vote powers. The weight is used to determine the influence of each voter&#x27;s shares on the proposal. The function first checks if the voter has already voted, if they have enough shares to vote on the proposal (with the option to change the weight), and if the voting period is still open. If all conditions are met, the function calculates the total power of the votes, checks that the total power does not exceed the proposal power, and then adds the vote powers (multiplied by the weight) to the corresponding proposal options. Finally, it updates the voter&#x27;s vote status and active voter lock for the proposal.</p>
+</li>
+<li><p><code v-pre>retrieve_proposal_names</code>: This function simply retrieves the names of all proposals. It returns an array of proposal names.</p>
+</li>
+</ul>
+<p>Note that the code uses some external functions, such as <code v-pre>stringsEquals</code>, which is a custom implementation of string comparison, and <code v-pre>voter_token.balanceOf</code>, which retrieves the balance of a voter&#x27;s tokens.</p>
 <doc-anchor-target id="newfactory1sol">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#newfactory1sol">#</doc-anchor-trigger>
