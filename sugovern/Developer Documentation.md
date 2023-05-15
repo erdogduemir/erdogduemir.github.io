@@ -120,6 +120,26 @@ The constructor function initializes the DAO contract with the following paramet
 
 In the constructor, the factory, `dao_name`, `dao_id`, `dao_description`, `yk_token`, `voter_token`, and `imageUrl` variables are set to their corresponding parameter values. The `yk_shares_to_be_given` and `voter_shares_to_be_give`n mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.
 
+A brief description of each function:
+
+- `mint_from_DAO_yk_token`: This internal function allows the DAO contract to mint YK tokens. The function takes in a parameter _amount, which specifies the amount of YK tokens to be minted.
+
+- `mint_from_DAO_voter_token`: This internal function allows the DAO contract to mint voter tokens. The function takes in a parameter _amount, which specifies the amount of voter tokens to be minted.
+
+- `iterate_proposals`: This public function iterates through all proposals and emits proposal information for each proposal. It updates the active voter lock if the proposal's status is not pending. The function does not take in any parameters.
+
+- `accept_proposal`: This external function accepts a proposal by changing its status to Status.Accepted. The function takes in a parameter _proposalId, which specifies the ID of the proposal to be accepted.
+
+- `reject_proposal`: This external function rejects a proposal by changing its status to Status.Rejected. The function takes in a parameter _proposalId, which specifies the ID of the proposal to be rejected.
+
+- `pending_proposal`: This external function sets a proposal's status to Status.Pending. The function takes in a parameter _proposalId, which specifies the ID of the proposal to be set as pending.
+
+- `withdraw_voter_tokens`: This external function allows a user to withdraw voter tokens from the DAO. The function takes in a parameter _amount, which specifies the amount of voter tokens to be withdrawn. The function checks whether the user has enough shares and transfers the specified amount of voter tokens from the DAO to the user. It also mints voter tokens for the DAO.
+
+- `withdraw_yk_tokens`: This external function allows a user to withdraw YK tokens from the DAO. The function takes in a parameter _amount, which specifies the amount of YK tokens to be withdrawn. The function checks whether the user has enough shares and transfers the specified amount of YK tokens from the DAO to the user. It also mints YK tokens for the DAO.
+
+
+
 ### newFactory1.sol
 
 This file contains the DAOFactory contract. This contract creates the Top DAO, which is the DAO that supervises all of it’s sub-DAO’s and mints 1000 tokens to this factory. This function also inludes the creation and assignment of the YK tokens to the factory.
