@@ -28,7 +28,7 @@ While deploying newFactory1.sol use the address of creator.sol.
 - Connecting to Front End:\
 The files that needs modification are found in the directory below.\
 “cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui\pages” In dao.js and index.js, the address of daoFactory should be typed in the statement where the daoFactoryContract is defined. In dao.js, line 114, and in index.js, line 180.\
-**In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation.**
+**In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation. The first contract needs to be deployed using Remix IDE.**
 
 ## Contracts
 
@@ -80,11 +80,11 @@ The below function is used to get the address of the current DAO.
 
 The below function is used for transfer processes. The function checks the balance of the owner to make sure there are enough credits and gives an option to have a debt if balance is insufficient and modifies the balance amount accordingly.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.011.jpeg)
+![](token_sol_1.png)
 
 The below function allows the user to take back all of the delegated tokens.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.012.jpeg)
+![](token_sol_2.png)
 
 ### Adding an Image to a DAO
 
