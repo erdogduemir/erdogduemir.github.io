@@ -76,29 +76,29 @@ The contract is responsible for creating and managing proposals, and tracking vo
 The contract contains several mappings and constants used for tracking and storing data. \
 These include:
 
-- proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.
+- `proposals`: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.
 
-- votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.
+- `votes`: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.
 
-- tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.
+- `tokens_not_refunded`: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.
 
-- token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.
+- `token_amount_to_be_refunded`: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.
 
-- voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.
+- `voter_shares_to_be_given`: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.
 
-- yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.
+- `yk_shares_to_be_given`: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.
 
-- voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.
+- `voter_token`: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.
 
-- yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.
+- `yk_token`: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.
 
-- CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.
+- `CREATE_PROPOSAL_MIN_SHARE`: A constant that sets the minimum number of shares required to create a proposal.
 
-- VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.
+- `VOTING_PERIOD`: A constant that sets the duration of the voting period for proposals.
 
-- nextProposalId: An integer that tracks the ID for the next proposal to be created.
+- `nextProposalId`: An integer that tracks the ID for the next proposal to be created.
 
-- transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.
+- `transferLock`: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.
 
 The constructor function initializes the DAO contract with the following parameters:
 
@@ -138,6 +138,27 @@ A brief description of each function:
 
 - `withdraw_yk_tokens`: This external function allows a user to withdraw YK tokens from the DAO. The function takes in a parameter _amount, which specifies the amount of YK tokens to be withdrawn. The function checks whether the user has enough shares and transfers the specified amount of YK tokens from the DAO to the user. It also mints YK tokens for the DAO.
 
+- `send_yk_tokens_to_address_yk`: This function sends YK tokens to a specified address. It takes in two parameters: `yk_candidate`, which is the address to send the YK tokens to, and `_amount`, which is the amount of YK tokens to send. It requires the caller to have YK privileges and updates the amount of YK tokens that will be given to the specified address.
+
+- `send_yk_tokens_to_address_yk_directly`: This function sends YK tokens directly to a specified address from the DAO. It takes in two parameters: `yk_candidate`, which is the address to send the YK tokens to, and `_amount`, which is the amount of YK tokens to send. It requires the caller to have YK privileges and updates the amount of YK tokens that will be given to the specified address. In addition to this, it also mints YK tokens from the DAO.
+
+- `send_voter_tokens_to_address_yk`: This function sends voter tokens to a specified address. It takes in two parameters: `voter_candidate`, which is the address to send the voter tokens to, and `_amount`, which is the amount of voter tokens to send. It requires the caller to have YK privileges and updates the amount of voter tokens that will be given to the specified address.
+
+- `send_voter_tokens_to_address_yk_directly`: This function sends voter tokens directly to a specified address from the DAO. It takes in two parameters: `voter_candidate`, which is the address to send the voter tokens to, and `_amount`, which is the amount of voter tokens to send. It requires the caller to have YK privileges and updates the amount of voter tokens that will be given to the specified address. In addition to this, it also mints voter tokens from the DAO.
+
+- `createProposal`: This function creates a new proposal. It takes in six parameters: `name`, which is the name of the proposal; `description`, which is the description of the proposal; `_options`, which is an array of vote options; `_options_num`, which is an array of corresponding vote option numbers; `_power`, which is the maximum vote power for the proposal; and `_type`, which is the type of the proposal (0 for normal, 1 for weighted). It requires the caller to have YK privileges and creates a new proposal with the specified parameters. It also updates the proposal count.
+
+- `vote`: This function performs a non-weighted vote on a proposal. It takes in three parameters: `_proposalId`, which is the ID of the proposal; `_vote`, which is an array of vote options; and `_power`, which is an array of corresponding vote powers. It requires the caller to have voter privileges and updates the vote count for the specified proposal.
+
+The code uses several Solidity concepts, such as function modifiers (`require` statements) and structs (`Proposal`), to ensure that the functions are secure and perform as intended.
+
+- `vote_power`: This function performs a weighted vote on a proposal. It takes three arguments: `_proposalId` (an unsigned integer representing the ID of the proposal), `_vote` (a string array representing the vote options), and `_power` (an unsigned integer array representing the corresponding vote powers). The function first checks if the voter has already voted, if they have enough shares to vote on the proposal, and if the voting period is still open. If all conditions are met, the function calculates the total power of the votes, checks that the total power does not exceed the proposal power, and then adds the vote powers to the corresponding proposal options. Finally, it updates the voter's vote status and active voter lock for the proposal.
+
+- `vote_power_weighted`: This function is similar to `vote_power`, but it includes an additional argument `weight`, which is a uint representing the weight to apply to the vote powers. The weight is used to determine the influence of each voter's shares on the proposal. The function first checks if the voter has already voted, if they have enough shares to vote on the proposal (with the option to change the weight), and if the voting period is still open. If all conditions are met, the function calculates the total power of the votes, checks that the total power does not exceed the proposal power, and then adds the vote powers (multiplied by the weight) to the corresponding proposal options. Finally, it updates the voter's vote status and active voter lock for the proposal.
+
+- `retrieve_proposal_names`: This function simply retrieves the names of all proposals. It returns an array of proposal names.
+
+Note that the code uses some external functions, such as `stringsEquals`, which is a custom implementation of string comparison, and `voter_token.balanceOf`, which retrieves the balance of a voter's tokens.
 
 
 ### newFactory1.sol
