@@ -8,7 +8,7 @@ yarn reference link: https://classic.yarnpkg.com/lang/en/docs/install/#windows-s
 npm reference link: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
 - Install the dependency packages\
-in the project folder navigate to directory using\
+in the project folder navigate to directory using
 ```
 cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui
 ```
@@ -17,7 +17,7 @@ install next if needed using "npm install next" or "yarn install next"\
 Clone the repo from: https://github.com/Cem-Kaya/SU_Govern
 
 - To run the front-end:\
-in the project folder change the directory using\
+in the project folder change the directory using
 ```
 cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui
 ```
@@ -30,7 +30,7 @@ Contracts are deployed in this order: 1) creator.sol, 2) newFactory1.sol.\
 While deploying newFactory1.sol use the address of creator.sol.
 
 - Connecting to Front End:\
-The files that needs modification are found in the directory below.\
+The files that needs modification are found in the directory below.
 ```
 cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui\pages
 ```
