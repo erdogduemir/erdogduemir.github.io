@@ -160,6 +160,42 @@ The code uses several Solidity concepts, such as function modifiers (`require` s
 
 Note that the code uses some external functions, such as `stringsEquals`, which is a custom implementation of string comparison, and `voter_token.balanceOf`, which retrieves the balance of a voter's tokens.
 
+- `getProposalName()`: This function retrieves an array of proposal names. It loops through all proposals and adds the name of each proposal to an array called `myprops`. The function then returns this array.
+
+- `getDaoid()`: This function retrieves the DAO ID. It simply returns the value of the `dao_id` variable.
+
+- `has_yk_priviliges(address chk)`: This function checks whether the given address has YK (Yieldly Token) privileges. It first checks if the balance of YK tokens of the given address is greater than or equal to 1. If this condition is satisfied, it returns `true`. Otherwise, it retrieves the current DAO using the `factory.getCurrentDAO()` function and checks whether any of the parent DAOs have a YK balance greater than or equal to 1 * 10^18. If this condition is satisfied, it returns `true`. Otherwise, it returns `false`.
+
+- `getProposalDescription()`: This function retrieves an array of proposal descriptions. It loops through all proposals and adds the description of each proposal to an array called `myprops`. The function then returns this array.
+
+- `getProposalVoteNames(uint proposal_idd)`: This function retrieves an array of vote names/options for a specific proposal. It retrieves the `options` array of the proposal with the given ID and adds each option to an array called `mypropvotes`. The function then returns this array.
+
+- `getProposalVoteNumbers(uint proposal_idd)`: This function retrieves an array of vote numbers/totals for a specific proposal. It retrieves the `options_num` array of the proposal with the given ID and adds each vote number to an array called `mypropvotenums`. The function then returns this array.
+
+- `getProposalPower(uint proposal_idd)`: This function retrieves the power of a specific proposal. It retrieves the `power` variable of the proposal with the given ID and returns it.
+
+- `getProposalType(uint proposal_idd)`: This function retrieves the type of a specific proposal. This function is not defined in the provided code.
+
+- `getProposalType(uint proposal_idd)`: This function takes a proposal ID as input and returns a string representing the type of the proposal. The string value is obtained from a mapping called `proposals` which maps a proposal ID to a struct containing information about the proposal. The function is `view` type, meaning it doesn't modify the state of the contract and can be called without incurring any gas cost.
+
+- `dao_delegation_single_getback_amount_voter(address from, uint256 amount)`: This function allows a voter to retrieve a single token that was delegated to another address. The `from` parameter specifies the address from which the token will be retrieved and `amount` specifies the number of tokens to be retrieved. The function checks that the number of tokens being retrieved is less than or equal to the number of debt tokens held by the `from` address. This function can only be called externally.
+
+- `dao_delegation_single_getback_all_voter(address from)`: This function allows a voter to retrieve all tokens that were delegated to another address. The `from` parameter specifies the address from which all tokens will be retrieved. This function can only be called externally.
+
+- `dao_delagation_multiple_getback_all_voter()`: This function allows a voter to retrieve all tokens that were delegated to multiple addresses. This function can only be called externally. This function has no parameters.
+
+- `dao_clawback_single_voter(address from)`: This function allows the DAO to retrieve a single token that was delegated to another address by a voter. The `from` parameter specifies the address from which the token will be retrieved. The function checks that the caller has YK (Yield Keeper) privileges. This function can only be called externally.
+
+- `dao_clawback_all_voter()`: This function allows the DAO to retrieve all tokens that were delegated to another address by voters. The function checks that the caller has YK (Yield Keeper) privileges. This function can only be called externally.
+
+- `dao_delegation_single_getback_amount_yk(address from, uint256 amount`: This function allows the DAO to retrieve a single token that was delegated to another address by a YK. The `from` parameter specifies the address from which the token will be retrieved and `amount` specifies the number of tokens to be retrieved. The function checks that the number of tokens being retrieved is less than or equal to the number of debt tokens held by the `from` address. This function can only be called externally.
+
+- `dao_delegation_single_getback_all_yk(address from)`:
+This function allows the DAO to retrieve all tokens that were delegated to another address by a YK. The `from` parameter specifies the address from which all tokens will be retrieved. This function can only be called externally.
+
+- `dao_delagation_multiple_getback_all_yk()`: This function allows the DAO to retrieve all tokens that were delegated to multiple addresses by a YK. The function checks that the caller has YK (Yield Keeper) privileges. This function can only be called externally. This function has no parameters.
+
+- `dao_clawback_single_yk(address to)`: This function allows the DAO to retrieve a single token that was delegated to another address by a YK. The `to` parameter specifies the address to which the token will be clawed back. The function checks that the caller has YK.
 
 ### newFactory1.sol
 
