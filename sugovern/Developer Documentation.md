@@ -79,37 +79,171 @@ contract Migrations {
 
 ### newFactory1.sol
 
-This file contains the DAOFactory contract. This contract creates the Top DAO, which is the DAO that supervises all of it’s sub-DAO’s and mints 100 tokens to this factory.
+This file contains the DAOFactory contract. This contract creates the Top DAO, which is the DAO that supervises all of it’s sub-DAO’s and mints 1000 tokens to this factory. This function also inludes the creation and assignment of the YK tokens to the factory.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.003.jpeg)
+```
+constructor(address myCreator) {
+        my_creator = icreator(myCreator);
+        is_a_dao_creator[msg.sender] = true;
+        next_dao_id = 0;
+    }
 
-The below lines show the creation and assignment of the YK tokens to the factory.
+    //so first the dao and the token will be created, factory will have the tokens and dao will have the allowance to use
+    //these tokens, the yk will be able to withdraw, send and deposit yk_tokens
+    function createDAOTop( string memory dao_name,  string memory dao_description, string memory yk_token_name, string memory yk_token_symbol, string memory voter_token_name, string memory voter_token_symbol) public {
+        require(is_a_dao_creator[msg.sender] == true, 'Not added as a DAO Creator');
+        //line below mints 1000 tokens to this factory, also makes factory the owner of these tokens
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.004.jpeg)
+        //ISUToken yk_token = new ISUToken(yk_token_name, yk_token_symbol, address(this));
+        //ISUToken voter_token = new ISUToken(voter_token_name, voter_token_symbol, address(this));
 
-The below function is used to create a childDAO under the Top DAO.
+        (yk_token_address, voter_token_address) = my_creator.createToken(yk_token_name,yk_token_symbol,  voter_token_name,  voter_token_symbol);
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.005.jpeg)
+        ISUToken yk_token = ISUToken(yk_token_address);
+        ISUToken voter_token = ISUToken(voter_token_address);
+        MyDAO c = new MyDAO(dao_name, dao_description,next_dao_id, msg.sender, yk_token, voter_token, this);
+        //token.mint(address(c), 1000*10**18);
+        //with this function my dao can use the tokens my factory has however it wishes, it is currently only 1000, can add mint later
+        yk_token.increaseAllowance(address(c), 1000* 10**18);
+        yk_token.increaseAllowance(address(this), 1000* 10**18);
+        voter_token.increaseAllowance(address(c), 1000* 10**18);
+        voter_token.increaseAllowance(address(this), 1000* 10**18);
+        yk_token.assignDAO( address(c));
+        voter_token.assignDAO( address(c));
+        //we save which dao has which yk tokens and which voter tokens
+
+        dao_tokens_yk[c] = yk_token;
+        dao_tokens_voter[c] = voter_token;
+        dao_first_yk[c] = msg.sender;
+        token_first_yk[yk_token] = msg.sender;
+        top_dao = address(c);
+        dao_exists[c] = true;
+
+        //tokens are minted to factory right, we are sending them to dao so they can utilize it.
+        voter_token.transferFrom(address(this), address(c), 1000 * 10**18);
+        yk_token.transferFrom(address(this), address(c), (1000 * 10 ** 18));
+        all_daos[next_dao_id] = c;
+
+
+
+        next_dao_id += 1;
+    }
+```
+
+The below function is used to create a childDAO under the Top DAO. It also checks if the requesting user has a YK token.
+
+```
+function createChildDAO( MyDAO parent, string memory dao_name,  string memory dao_description, string memory yk_token_name, string memory yk_token_symbol, string memory voter_token_name, string memory voter_token_symbol) public {
+        require(parent.has_yk_priviliges(msg.sender) == true, 'Not a YK of parent DAO');
+        //line below mints 1000 tokens to this factory, also makes factory the owner of these tokens
+
+
+        (yk_token_address, voter_token_address) = my_creator.createToken(yk_token_name,yk_token_symbol,  voter_token_name,  voter_token_symbol);
+        ISUToken yk_token = ISUToken(yk_token_address);
+        ISUToken voter_token = ISUToken(voter_token_address);
+        MyDAO c = new MyDAO(dao_name, dao_description,next_dao_id, msg.sender, yk_token, voter_token, this);
+        //token.mint(address(c), 1000*10**18);
+        //with this function my dao can use the tokens my factory has however it wishes, it is currently only 1000, can add mint later
+        yk_token.increaseAllowance(address(c), 1000* 10**18);
+        yk_token.increaseAllowance(address(this), 1000* 10**18);
+        voter_token.increaseAllowance(address(c), 1000* 10**18);
+        voter_token.increaseAllowance(address(this), 1000* 10**18);
+        //check if assignDAO works with interface
+        yk_token.assignDAO( address(c));
+        voter_token.assignDAO( address(c));
+        //we save which dao has which yk tokens and which voter tokens
+
+        dao_tokens_yk[c] = yk_token;
+        dao_tokens_voter[c] = voter_token;
+        dao_first_yk[c] = msg.sender;
+        token_first_yk[yk_token] = msg.sender;
+        //top_dao = address(c);
+        dao_exists[c] = true;
+        parent_child_daos[parent].push(c);
+        num_children[parent] += 1;
+        child_parent[c] = parent;
+
+
+
+        //tokens are minted to factory right, we are sending them to dao so they can utilize it.
+        voter_token.transferFrom(address(this), address(c), 1000 * 10**18);
+        yk_token.transferFrom(address(this), address(c), (1000 * 10 ** 18));
+
+
+
+
+        all_daos[next_dao_id] = c;
+        next_dao_id += 1;
+    }
+```
 
 The below function is used to mint YK tokens for a DAO.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.006.jpeg)
+```
+function mint_dao_yk(MyDAO to_be_minted, uint amount, address sender) public {
+        require(to_be_minted.has_yk_priviliges(sender), "Not YK of selected DAO");
+        //make sure the one who sends this is dao
+        require(msg.sender == address(to_be_minted), "Don't even try");
+        dao_tokens_yk[to_be_minted].mint(address(to_be_minted), amount*10**18);
+    }
+```
 
 The below function is used to give creator privileges.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.007.png)
+```
+function addCreator(address input_creator) public
+    {
+        is_a_dao_creator[input_creator] = true;
+    }
+```
 
 The below function is used to get the address of the parent DAO of a child DAO.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.008.png)
+```
+function getParentDAO(MyDAO mydao)  public view returns (MyDAO){
+        return child_parent[mydao];
+
+    }
+```
 
 The below function is used to get the address of the current DAO.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.009.png)
+```
+function getCurrentDAO(uint256 id)  public view returns (MyDAO){
+        return all_daos[id];
 
-The below function is used to delete a DAO. The function checks if the request is sent by a YK member and if so continues with deletion and if not throws an error message. The function also checks if the DAO to be deleted has ant child DAOs and if they exist deletes them as well.
+    }
+```
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.010.jpeg)
+The below function is used to delete a DAO. The function checks if the request is sent by a YK member and if so continues with deletion and if not throws an error message. The function also checks if the DAO to be deleted has any child DAOs and if they exist deletes them as well.
+
+```
+function delete_DAO(MyDAO to_be_deleted, address sender) public {
+        require(to_be_deleted.has_yk_priviliges(sender) || msg.sender == address(this) || msg.sender == address(to_be_deleted), "Not YK of selected DAO");
+        //make sure the one who sends this is dao
+        require(msg.sender == address(to_be_deleted), "Don't even try");
+
+
+        num_children[child_parent[to_be_deleted]] -= 1;
+        for (uint i = 0 ; i < parent_child_daos[to_be_deleted].length; i++){
+            parent_child_daos[to_be_deleted][i].delete_this_dao();
+        }
+        for ( uint i = 0; i < parent_child_daos[child_parent[to_be_deleted]].length; i++){
+            if( parent_child_daos[child_parent[to_be_deleted]][i]== to_be_deleted){
+                //user_delegations[to][i];
+                //string element = myArray[index];
+                parent_child_daos[child_parent[to_be_deleted]][i] = parent_child_daos[child_parent[to_be_deleted]][parent_child_daos[child_parent[to_be_deleted]].length - 1];
+                parent_child_daos[child_parent[to_be_deleted]].pop();
+
+
+            }
+
+        }
+        dao_exists[to_be_deleted] = false;
+        MyDAO c;
+        all_daos[ to_be_deleted.getDaoid()] = c;
+    }
+```
 
 ### Token.sol
 
