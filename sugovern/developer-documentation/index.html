@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737499513293">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737499738233">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737499513293" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737499738233" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737499513293" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737499738233" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737499513293" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737499738233" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -260,29 +260,54 @@ The contract also includes a private function stringsEquals that compares two st
 The public variables of the contract include the name, description, debugging information, image URL, and unique identifier of the DAO. It also defines two enums for voting options and proposal status.
 The contract imports the itoken.sol and newFactory1.sol contracts and declares a DAOFactory variable for the newFactory1 contract.
 The contract is responsible for creating and managing proposals, and tracking voting shares and tokens for voters and YK token holders.</p>
-<p>The contract contains several mappings and constants used for tracking and storing data. These include:</p>
-<p>proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.</p>
-<p>votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.</p>
-<p>tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.</p>
-<p>token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.</p>
-<p>voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.</p>
-<p>yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.</p>
-<p>voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.</p>
-<p>yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.</p>
-<p>CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.</p>
-<p>VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.</p>
-<p>nextProposalId: An integer that tracks the ID for the next proposal to be created.</p>
-<p>transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.</p>
+<p>The contract contains several mappings and constants used for tracking and storing data. <br />
+These include:</p>
+<ul>
+<li><p>proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.</p>
+</li>
+<li><p>votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.</p>
+</li>
+<li><p>tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.</p>
+</li>
+<li><p>token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.</p>
+</li>
+<li><p>voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.</p>
+</li>
+<li><p>yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.</p>
+</li>
+<li><p>voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.</p>
+</li>
+<li><p>yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.</p>
+</li>
+<li><p>CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.</p>
+</li>
+<li><p>VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.</p>
+</li>
+<li><p>nextProposalId: An integer that tracks the ID for the next proposal to be created.</p>
+</li>
+<li><p>transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.</p>
+</li>
+</ul>
 <p>The constructor function initializes the DAO contract with the following parameters:</p>
-<p>_dao_name: A string representing the name of the DAO.</p>
-<p>_imageUrl: A string representing the URL of the DAO&#x27;s image.</p>
-<p>_dao_description: A string representing the description of the DAO.</p>
-<p>_dao_id: An integer representing the ID of the DAO.</p>
-<p>first_yk: The address of the initial YK token holder.</p>
-<p>yk_token_in: An instance of the ISUToken contract representing the YK token used by the DAO.</p>
-<p>voter_token_in: An instance of the ISUToken contract representing the voter token used by the DAO.</p>
-<p>_factory: An instance of the DAOFactory contract representing the DAO factory used to create the DAO.</p>
-<p>In the constructor, the factory, dao_name, dao_id, dao_description, yk_token, voter_token, and imageUrl variables are set to their corresponding parameter values. The yk_shares_to_be_given and voter_shares_to_be_given mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.</p>
+<ul>
+<li><p><code v-pre>_dao_name</code>: A string representing the name of the DAO.</p>
+</li>
+<li><p><code v-pre>_imageUrl</code>: A string representing the URL of the DAO&#x27;s image.</p>
+</li>
+<li><p><code v-pre>_dao_description</code>: A string representing the description of the DAO.</p>
+</li>
+<li><p><code v-pre>_dao_id</code>: An integer representing the ID of the DAO.</p>
+</li>
+<li><p><code v-pre>first_yk</code>: The address of the initial YK token holder.</p>
+</li>
+<li><p><code v-pre>yk_token_in</code>: An instance of the ISUToken contract representing the YK token used by the DAO.</p>
+</li>
+<li><p><code v-pre>voter_token_in</code>: An instance of the ISUToken contract representing the voter token used by the DAO.</p>
+</li>
+<li><p><code v-pre>_factory</code>: An instance of the DAOFactory contract representing the DAO factory used to create the DAO.</p>
+</li>
+</ul>
+<p>In the constructor, the factory, <code v-pre>dao_name</code>, <code v-pre>dao_id</code>, <code v-pre>dao_description</code>, <code v-pre>yk_token</code>, <code v-pre>voter_token</code>, and <code v-pre>imageUrl</code> variables are set to their corresponding parameter values. The <code v-pre>yk_shares_to_be_given</code> and <code v-pre>voter_shares_to_be_give</code>n mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.</p>
 <doc-anchor-target id="newfactory1sol">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#newfactory1sol">#</doc-anchor-trigger>
