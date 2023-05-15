@@ -55,54 +55,6 @@ Please note that some parts of the contract are commented out, such as the impor
 
 Remember to customize and adapt this documentation according to your specific needs, such as providing more details about the purpose and usage of the contract or explaining any additional functions or dependencies.
 
-
-```
-/**
- * @title Creator Contract
- * @dev This contract is responsible for creating tokens and transferring ownership to the factory.
- */
-
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.7.0 <0.9.0;
-pragma experimental ABIEncoderV2;
-
-//import "./DAO.sol";
-import "./token.sol";
-import "./icreator.sol";
-
-contract creator is icreator {
-
-    /**
-     * @dev Creates two tokens and transfers ownership to the factory.
-     * @param yk_token_name The name of the first token.
-     * @param yk_token_symbol The symbol of the first token.
-     * @param voter_token_name The name of the second token.
-     * @param voter_token_symbol The symbol of the second token.
-     * @return The addresses of the created tokens.
-     */
-    function createToken(string memory yk_token_name, string memory yk_token_symbol, string memory voter_token_name, string memory voter_token_symbol ) external override returns (address, address) {
-        // Get the address of the factory
-        address my_factory = msg.sender;
-
-        // Create the first token
-        SUToken yk_token = new SUToken(yk_token_name, yk_token_symbol, my_factory);
-
-        // Create the second token
-        SUToken voter_token = new SUToken(voter_token_name, voter_token_symbol, my_factory);
-
-        // Transfer ownership of the first token to the factory
-        yk_token.transferOwnership(my_factory);
-
-        // Transfer ownership of the second token to the factory
-        voter_token.transferOwnership(my_factory);
-
-        // Return the addresses of the created tokens
-        return (address(yk_token), address(voter_token));
-    }
-
-}
-```
-
 ### Migrations.sol
 
 The Migrations contract is a simple contract that stores the last completed migration. The contract has a `setCompleted` function that sets the `last_completed_migration` variable to the value passed in as a parameter. However, this function can only be called by the contract owner.
@@ -113,45 +65,59 @@ The contract also has an `owner` variable that is initialized with the address o
 
 This contract can be used as a base contract for contract migrations.
 
-```
-// SPDX-License-Identifier: MIT
-// The above line specifies the license under which this code is released.
-// This is a standard identifier used to identify the license type.
-// pragma solidity >=0.4.22 <0.9.0;
-// This line specifies the minimum and maximum version of Solidity the contract is compatible with.
+### newDAO1.sol
 
-// The contract is named Migrations.
-contract Migrations {
+The MyDAO contract implements a decentralized autonomous organization (DAO) that allows members to create proposals and vote on them. It defines a Proposal struct that contains information about each proposal, including its unique identifier, author, name, description, creation timestamp, options, status, power, and proposal information type.
+The contract also includes a private function stringsEquals that compares two strings and returns a boolean indicating whether they are equal.
+The public variables of the contract include the name, description, debugging information, image URL, and unique identifier of the DAO. It also defines two enums for voting options and proposal status.
+The contract imports the itoken.sol and newFactory1.sol contracts and declares a DAOFactory variable for the newFactory1 contract.
+The contract is responsible for creating and managing proposals, and tracking voting shares and tokens for voters and YK token holders.
 
-  // An address variable named owner is defined and initialized with the address of the contract deployer.
-  address public owner = msg.sender;
+The contract contains several mappings and constants used for tracking and storing data. These include:
 
-  // An unsigned integer variable named last_completed_migration is defined.
-  uint public last_completed_migration;
+proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.
 
-  // A modifier named restricted is defined.
-  modifier restricted() {
-    // require is a built-in function that checks a condition, and if it evaluates to false, it throws an exception and reverts the transaction.
-    // msg.sender is the address of the account that called the current function.
-    // If the condition is true, then the rest of the function is executed. If it is false, then an exception is thrown.
-    require(
-      msg.sender == owner,
-      "This function is restricted to the contract's owner"
-    );
-    // The "_" character is a placeholder that is replaced with the code of the function that uses the modifier.
-    // In this case, it is the setCompleted function.
-    _;
-  }
+votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.
 
-  // A function named setCompleted is defined that takes an unsigned integer parameter named completed.
-  // The "public" keyword means that the function can be called from outside the contract.
-  // The "restricted" modifier restricts the function so that only the owner of the contract can call it.
-  function setCompleted(uint completed) public restricted {
-    // The last_completed_migration variable is set to the value of the completed parameter.
-    last_completed_migration = completed;
-  }
-}
-```
+tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.
+
+token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.
+
+voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.
+
+yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.
+
+voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.
+
+yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.
+
+CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.
+
+VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.
+
+nextProposalId: An integer that tracks the ID for the next proposal to be created.
+
+transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.
+
+The constructor function initializes the DAO contract with the following parameters:
+
+_dao_name: A string representing the name of the DAO.
+
+_imageUrl: A string representing the URL of the DAO's image.
+
+_dao_description: A string representing the description of the DAO.
+
+_dao_id: An integer representing the ID of the DAO.
+
+first_yk: The address of the initial YK token holder.
+
+yk_token_in: An instance of the ISUToken contract representing the YK token used by the DAO.
+
+voter_token_in: An instance of the ISUToken contract representing the voter token used by the DAO.
+
+_factory: An instance of the DAOFactory contract representing the DAO factory used to create the DAO.
+
+In the constructor, the factory, dao_name, dao_id, dao_description, yk_token, voter_token, and imageUrl variables are set to their corresponding parameter values. The yk_shares_to_be_given and voter_shares_to_be_given mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.
 
 ### newFactory1.sol
 
