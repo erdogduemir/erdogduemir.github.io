@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737499738233">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737499975134">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737499738233" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737499975134" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737499738233" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737499975134" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737499738233" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737499975134" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -308,6 +308,25 @@ These include:</p>
 </li>
 </ul>
 <p>In the constructor, the factory, <code v-pre>dao_name</code>, <code v-pre>dao_id</code>, <code v-pre>dao_description</code>, <code v-pre>yk_token</code>, <code v-pre>voter_token</code>, and <code v-pre>imageUrl</code> variables are set to their corresponding parameter values. The <code v-pre>yk_shares_to_be_given</code> and <code v-pre>voter_shares_to_be_give</code>n mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.</p>
+<p>A brief description of each function:</p>
+<ul>
+<li><p><code v-pre>mint_from_DAO_yk_token</code>: This internal function allows the DAO contract to mint YK tokens. The function takes in a parameter _amount, which specifies the amount of YK tokens to be minted.</p>
+</li>
+<li><p><code v-pre>mint_from_DAO_voter_token</code>: This internal function allows the DAO contract to mint voter tokens. The function takes in a parameter _amount, which specifies the amount of voter tokens to be minted.</p>
+</li>
+<li><p><code v-pre>iterate_proposals</code>: This public function iterates through all proposals and emits proposal information for each proposal. It updates the active voter lock if the proposal&#x27;s status is not pending. The function does not take in any parameters.</p>
+</li>
+<li><p><code v-pre>accept_proposal</code>: This external function accepts a proposal by changing its status to Status.Accepted. The function takes in a parameter _proposalId, which specifies the ID of the proposal to be accepted.</p>
+</li>
+<li><p><code v-pre>reject_proposal</code>: This external function rejects a proposal by changing its status to Status.Rejected. The function takes in a parameter _proposalId, which specifies the ID of the proposal to be rejected.</p>
+</li>
+<li><p><code v-pre>pending_proposal</code>: This external function sets a proposal&#x27;s status to Status.Pending. The function takes in a parameter _proposalId, which specifies the ID of the proposal to be set as pending.</p>
+</li>
+<li><p><code v-pre>withdraw_voter_tokens</code>: This external function allows a user to withdraw voter tokens from the DAO. The function takes in a parameter _amount, which specifies the amount of voter tokens to be withdrawn. The function checks whether the user has enough shares and transfers the specified amount of voter tokens from the DAO to the user. It also mints voter tokens for the DAO.</p>
+</li>
+<li><p><code v-pre>withdraw_yk_tokens</code>: This external function allows a user to withdraw YK tokens from the DAO. The function takes in a parameter _amount, which specifies the amount of YK tokens to be withdrawn. The function checks whether the user has enough shares and transfers the specified amount of YK tokens from the DAO to the user. It also mints YK tokens for the DAO.</p>
+</li>
+</ul>
 <doc-anchor-target id="newfactory1sol">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#newfactory1sol">#</doc-anchor-trigger>
