@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737498019425">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737498320178">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737498019425" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737498320178" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737498019425" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737498320178" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737498019425" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737498320178" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -291,23 +291,48 @@ contract creator is icreator {
         <span>Migrations.sol</span>
     </h3>
 </doc-anchor-target>
-<p>This file contains the Migrations contract. The contract checks if the migration request is from the owner of the contract and if so completes the task.</p>
+<p>The Migrations contract is a simple contract that stores the last completed migration. The contract has a setCompleted function that sets the last_completed_migration variable to the value passed in as a parameter. However, this function can only be called by the contract owner.</p>
+<p>The restricted modifier restricts the function so that only the owner of the contract can call it. If a non-owner account attempts to call the function, an exception is thrown and the transaction is reverted.</p>
+<p>The contract also has an owner variable that is initialized with the address of the contract deployer. This address is used in the restricted modifier to check that the calling account is the owner of the contract.</p>
+<p>This contract can be used as a base contract for contract migrations.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">contract Migrations {
+<pre class="language-none"><code v-pre class="language-none">// SPDX-License-Identifier: MIT
+// The above line specifies the license under which this code is released.
+// This is a standard identifier used to identify the license type.
+// pragma solidity &gt;=0.4.22 &lt;0.9.0;
+// This line specifies the minimum and maximum version of Solidity the contract is compatible with.
+
+// The contract is named Migrations.
+contract Migrations {
+
+  // An address variable named owner is defined and initialized with the address of the contract deployer.
   address public owner = msg.sender;
+
+  // An unsigned integer variable named last_completed_migration is defined.
   uint public last_completed_migration;
 
+  // A modifier named restricted is defined.
   modifier restricted() {
+    // require is a built-in function that checks a condition, and if it evaluates to false, it throws an exception and reverts the transaction.
+    // msg.sender is the address of the account that called the current function.
+    // If the condition is true, then the rest of the function is executed. If it is false, then an exception is thrown.
     require(
       msg.sender == owner,
       &quot;This function is restricted to the contract's owner&quot;
     );
+    // The &quot;_&quot; character is a placeholder that is replaced with the code of the function that uses the modifier.
+    // In this case, it is the setCompleted function.
     _;
   }
 
+  // A function named setCompleted is defined that takes an unsigned integer parameter named completed.
+  // The &quot;public&quot; keyword means that the function can be called from outside the contract.
+  // The &quot;restricted&quot; modifier restricts the function so that only the owner of the contract can call it.
   function setCompleted(uint completed) public restricted {
+    // The last_completed_migration variable is set to the value of the completed parameter.
     last_completed_migration = completed;
-  }</code></pre>
+  }
+}</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="newfactory1sol">
     <h3>
