@@ -365,7 +365,7 @@ function delagation_multiple_getback_all(address to) public override returns (bo
 
 ### Adding an Image to a DAO
 
-The constructor of newdao1.sol file includes an imageurl variable. During the creation of a dao a line like the following can be used to pass the link address of an image to be used for the DAO.
+The constructor of `newdao1.sol` file includes an `imageurl` variable. During the creation of a dao a line like the following can be used to pass the link address of an image to be used for the DAO.
 
 ```
 MyDAO myDAO = new MyDAO("https://example.com/image.jpg");
