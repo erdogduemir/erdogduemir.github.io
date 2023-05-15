@@ -98,7 +98,9 @@ The below function is used to get the address of the parent DAO of a child DAO.
 
 The below function is used to get the address of the current DAO.
 
-![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.009.png)The below function is used to delete a DAO. The function checks if the request is sent by a YK member and if so continues with deletion and if not throws an error message. The function also checks if the DAO to be deleted has ant child DAOs and if they exist deletes them as well.
+![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.009.png)
+
+The below function is used to delete a DAO. The function checks if the request is sent by a YK member and if so continues with deletion and if not throws an error message. The function also checks if the DAO to be deleted has ant child DAOs and if they exist deletes them as well.
 
 ![](Aspose.Words.a67b8021-f51d-4762-ae4e-28db9c8332dc.010.jpeg)
 
@@ -148,4 +150,6 @@ function delagation_multiple_getback_all(address to) public override returns (bo
 
 The constructor of newdao1.sol file includes an imageurl variable. During the creation of a dao a line like the following can be used to pass the link address of an image to be used for the DAO.
 
+```
 MyDAO myDAO = new MyDAO("https://example.com/image.jpg");
+```
