@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737498320178">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737498525678">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737498320178" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737498525678" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737498320178" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737498525678" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737498320178" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737498525678" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -291,9 +291,9 @@ contract creator is icreator {
         <span>Migrations.sol</span>
     </h3>
 </doc-anchor-target>
-<p>The Migrations contract is a simple contract that stores the last completed migration. The contract has a setCompleted function that sets the last_completed_migration variable to the value passed in as a parameter. However, this function can only be called by the contract owner.</p>
+<p>The Migrations contract is a simple contract that stores the last completed migration. The contract has a <code v-pre>setCompleted</code> function that sets the <code v-pre>last_completed_migration</code> variable to the value passed in as a parameter. However, this function can only be called by the contract owner.</p>
 <p>The restricted modifier restricts the function so that only the owner of the contract can call it. If a non-owner account attempts to call the function, an exception is thrown and the transaction is reverted.</p>
-<p>The contract also has an owner variable that is initialized with the address of the contract deployer. This address is used in the restricted modifier to check that the calling account is the owner of the contract.</p>
+<p>The contract also has an <code v-pre>owner</code> variable that is initialized with the address of the contract deployer. This address is used in the restricted modifier to check that the calling account is the owner of the contract.</p>
 <p>This contract can be used as a base contract for contract migrations.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">// SPDX-License-Identifier: MIT
