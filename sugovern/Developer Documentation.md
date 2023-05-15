@@ -105,24 +105,52 @@ contract creator is icreator {
 
 ### Migrations.sol
 
-This file contains the Migrations contract. The contract checks if the migration request is from the owner of the contract and if so completes the task.
+The Migrations contract is a simple contract that stores the last completed migration. The contract has a setCompleted function that sets the last_completed_migration variable to the value passed in as a parameter. However, this function can only be called by the contract owner.
+
+The restricted modifier restricts the function so that only the owner of the contract can call it. If a non-owner account attempts to call the function, an exception is thrown and the transaction is reverted.
+
+The contract also has an owner variable that is initialized with the address of the contract deployer. This address is used in the restricted modifier to check that the calling account is the owner of the contract.
+
+This contract can be used as a base contract for contract migrations.
 
 ```
+// SPDX-License-Identifier: MIT
+// The above line specifies the license under which this code is released.
+// This is a standard identifier used to identify the license type.
+// pragma solidity >=0.4.22 <0.9.0;
+// This line specifies the minimum and maximum version of Solidity the contract is compatible with.
+
+// The contract is named Migrations.
 contract Migrations {
+
+  // An address variable named owner is defined and initialized with the address of the contract deployer.
   address public owner = msg.sender;
+
+  // An unsigned integer variable named last_completed_migration is defined.
   uint public last_completed_migration;
 
+  // A modifier named restricted is defined.
   modifier restricted() {
+    // require is a built-in function that checks a condition, and if it evaluates to false, it throws an exception and reverts the transaction.
+    // msg.sender is the address of the account that called the current function.
+    // If the condition is true, then the rest of the function is executed. If it is false, then an exception is thrown.
     require(
       msg.sender == owner,
       "This function is restricted to the contract's owner"
     );
+    // The "_" character is a placeholder that is replaced with the code of the function that uses the modifier.
+    // In this case, it is the setCompleted function.
     _;
   }
 
+  // A function named setCompleted is defined that takes an unsigned integer parameter named completed.
+  // The "public" keyword means that the function can be called from outside the contract.
+  // The "restricted" modifier restricts the function so that only the owner of the contract can call it.
   function setCompleted(uint completed) public restricted {
+    // The last_completed_migration variable is set to the value of the completed parameter.
     last_completed_migration = completed;
   }
+}
 ```
 
 ### newFactory1.sol
