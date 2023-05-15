@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737498574250">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737499513293">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737498574250" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737499513293" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737498574250" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737499513293" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737498574250" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737499513293" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -239,52 +239,6 @@ The files that needs modification are found in the directory below.</p>
 <p>Finally, the addresses of the created tokens are returned as a tuple.</p>
 <p>Please note that some parts of the contract are commented out, such as the import statement for <code v-pre>DAO.sol</code>. It appears that those parts are not relevant to the current functionality of the contract.</p>
 <p>Remember to customize and adapt this documentation according to your specific needs, such as providing more details about the purpose and usage of the contract or explaining any additional functions or dependencies.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">/**
- * @title Creator Contract
- * @dev This contract is responsible for creating tokens and transferring ownership to the factory.
- */
-
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity &gt;=0.7.0 &lt;0.9.0;
-pragma experimental ABIEncoderV2;
-
-//import &quot;./DAO.sol&quot;;
-import &quot;./token.sol&quot;;
-import &quot;./icreator.sol&quot;;
-
-contract creator is icreator {
-
-    /**
-     * @dev Creates two tokens and transfers ownership to the factory.
-     * @param yk_token_name The name of the first token.
-     * @param yk_token_symbol The symbol of the first token.
-     * @param voter_token_name The name of the second token.
-     * @param voter_token_symbol The symbol of the second token.
-     * @return The addresses of the created tokens.
-     */
-    function createToken(string memory yk_token_name, string memory yk_token_symbol, string memory voter_token_name, string memory voter_token_symbol ) external override returns (address, address) {
-        // Get the address of the factory
-        address my_factory = msg.sender;
-
-        // Create the first token
-        SUToken yk_token = new SUToken(yk_token_name, yk_token_symbol, my_factory);
-
-        // Create the second token
-        SUToken voter_token = new SUToken(voter_token_name, voter_token_symbol, my_factory);
-
-        // Transfer ownership of the first token to the factory
-        yk_token.transferOwnership(my_factory);
-
-        // Transfer ownership of the second token to the factory
-        voter_token.transferOwnership(my_factory);
-
-        // Return the addresses of the created tokens
-        return (address(yk_token), address(voter_token));
-    }
-
-}</code></pre>
-</doc-codeblock></div>
 <doc-anchor-target id="migrationssol">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#migrationssol">#</doc-anchor-trigger>
@@ -295,45 +249,40 @@ contract creator is icreator {
 <p>The restricted modifier restricts the function so that only the owner of the contract can call it. If a non-owner account attempts to call the function, an exception is thrown and the transaction is reverted.</p>
 <p>The contract also has an <code v-pre>owner</code> variable that is initialized with the address of the contract deployer. This address is used in the restricted modifier to check that the calling account is the owner of the contract.</p>
 <p>This contract can be used as a base contract for contract migrations.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">// SPDX-License-Identifier: MIT
-// The above line specifies the license under which this code is released.
-// This is a standard identifier used to identify the license type.
-// pragma solidity &gt;=0.4.22 &lt;0.9.0;
-// This line specifies the minimum and maximum version of Solidity the contract is compatible with.
-
-// The contract is named Migrations.
-contract Migrations {
-
-  // An address variable named owner is defined and initialized with the address of the contract deployer.
-  address public owner = msg.sender;
-
-  // An unsigned integer variable named last_completed_migration is defined.
-  uint public last_completed_migration;
-
-  // A modifier named restricted is defined.
-  modifier restricted() {
-    // require is a built-in function that checks a condition, and if it evaluates to false, it throws an exception and reverts the transaction.
-    // msg.sender is the address of the account that called the current function.
-    // If the condition is true, then the rest of the function is executed. If it is false, then an exception is thrown.
-    require(
-      msg.sender == owner,
-      &quot;This function is restricted to the contract's owner&quot;
-    );
-    // The &quot;_&quot; character is a placeholder that is replaced with the code of the function that uses the modifier.
-    // In this case, it is the setCompleted function.
-    _;
-  }
-
-  // A function named setCompleted is defined that takes an unsigned integer parameter named completed.
-  // The &quot;public&quot; keyword means that the function can be called from outside the contract.
-  // The &quot;restricted&quot; modifier restricts the function so that only the owner of the contract can call it.
-  function setCompleted(uint completed) public restricted {
-    // The last_completed_migration variable is set to the value of the completed parameter.
-    last_completed_migration = completed;
-  }
-}</code></pre>
-</doc-codeblock></div>
+<doc-anchor-target id="newdao1sol">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#newdao1sol">#</doc-anchor-trigger>
+        <span>newDAO1.sol</span>
+    </h3>
+</doc-anchor-target>
+<p>The MyDAO contract implements a decentralized autonomous organization (DAO) that allows members to create proposals and vote on them. It defines a Proposal struct that contains information about each proposal, including its unique identifier, author, name, description, creation timestamp, options, status, power, and proposal information type.
+The contract also includes a private function stringsEquals that compares two strings and returns a boolean indicating whether they are equal.
+The public variables of the contract include the name, description, debugging information, image URL, and unique identifier of the DAO. It also defines two enums for voting options and proposal status.
+The contract imports the itoken.sol and newFactory1.sol contracts and declares a DAOFactory variable for the newFactory1 contract.
+The contract is responsible for creating and managing proposals, and tracking voting shares and tokens for voters and YK token holders.</p>
+<p>The contract contains several mappings and constants used for tracking and storing data. These include:</p>
+<p>proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.</p>
+<p>votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.</p>
+<p>tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.</p>
+<p>token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.</p>
+<p>voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.</p>
+<p>yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.</p>
+<p>voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.</p>
+<p>yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.</p>
+<p>CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.</p>
+<p>VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.</p>
+<p>nextProposalId: An integer that tracks the ID for the next proposal to be created.</p>
+<p>transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.</p>
+<p>The constructor function initializes the DAO contract with the following parameters:</p>
+<p>_dao_name: A string representing the name of the DAO.</p>
+<p>_imageUrl: A string representing the URL of the DAO&#x27;s image.</p>
+<p>_dao_description: A string representing the description of the DAO.</p>
+<p>_dao_id: An integer representing the ID of the DAO.</p>
+<p>first_yk: The address of the initial YK token holder.</p>
+<p>yk_token_in: An instance of the ISUToken contract representing the YK token used by the DAO.</p>
+<p>voter_token_in: An instance of the ISUToken contract representing the voter token used by the DAO.</p>
+<p>_factory: An instance of the DAOFactory contract representing the DAO factory used to create the DAO.</p>
+<p>In the constructor, the factory, dao_name, dao_id, dao_description, yk_token, voter_token, and imageUrl variables are set to their corresponding parameter values. The yk_shares_to_be_given and voter_shares_to_be_given mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.</p>
 <doc-anchor-target id="newfactory1sol">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#newfactory1sol">#</doc-anchor-trigger>
