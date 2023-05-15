@@ -28,7 +28,7 @@ While deploying newFactory1.sol use the address of creator.sol.
 - Connecting to Front End:
 The files that needs modification are found in the directory below.
 “cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui\pages” In dao.js and index.js, the address of daoFactory should be typed in the statement where the daoFactoryContract is defined. In dao.js, line 114, and in index.js, line 180.
-In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation.
+In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation.  
 
 ## Contracts
 
