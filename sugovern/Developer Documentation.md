@@ -103,20 +103,6 @@ contract creator is icreator {
 }
 ```
 
-This file includes a createToken function which is used to create new tokens and receive their addresses.
-
-```
-//create tokens, and transfer ownership to the factory
-    function createToken(string memory yk_token_name, string memory yk_token_symbol, string memory voter_token_name, string memory voter_token_symbol ) external override returns (address, address){
-        address my_factory = msg.sender;
-        SUToken yk_token = new SUToken(yk_token_name, yk_token_symbol, my_factory);
-        SUToken voter_token = new SUToken(voter_token_name, voter_token_symbol, my_factory);
-        yk_token.transferOwnership(my_factory);
-        voter_token.transferOwnership(my_factory);
-        return (address(yk_token), address(voter_token));
-    }
-```
-
 ### Migrations.sol
 
 This file contains the Migrations contract. The contract checks if the migration request is from the owner of the contract and if so completes the task.
