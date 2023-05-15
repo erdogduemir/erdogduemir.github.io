@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737496051259">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737496181065">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -32,11 +32,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737496051259" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737496181065" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737496051259" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737496181065" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737496051259" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737496181065" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -316,17 +316,41 @@ The files that needs modification are found in the directory below.<br />
     </h3>
 </doc-anchor-target>
 <p>The below function is used for transfer processes. The function checks the balance of the owner to make sure there are enough credits and gives an option to have a debt if balance is insufficient and modifies the balance amount accordingly.</p>
-<p><figure class="content-center">
-    <img src="../token_sol_1.png" alt="" />
-    <figcaption class="caption"></figcaption>
-</figure>
-</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">function transfer(address to, uint256 amount) public override (ERC20, ISUToken) returns (bool) {
+        address owner = _msgSender();
+        require(amount &lt;= balanceOf(owner), &quot;not enough in balance &quot;);
+        require(amount &lt;= my_tokens[owner], &quot;cant send debt tokens, you do not have enough tokens &quot;);
+        for (uint i = 0; i &lt; proposal_num; i ++ ){
+            if(transferLock[owner][i] == true){
+                require(false , &quot;have active voting&quot;);
+            }
+        }
+        _transfer(owner, to, amount);
+        my_tokens[owner] -= amount;
+        debt_tokens[to] += amount;
+        user_delegations_value[owner][to] += amount;
+        user_delegations[owner].push(to);
+        return true;
+    }</code></pre>
+</doc-codeblock></div>
 <p>The below function allows the user to take back all of the delegated tokens.</p>
-<p><figure class="content-center">
-    <img src="../token_sol_2.png" alt="" />
-    <figcaption class="caption"></figcaption>
-</figure>
-</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">function delagation_multiple_getback_all(address to) public override returns (bool) {
+        require(_msgSender() == myDAO || _msgSender() == address(this) , &quot;sender is not dao or token&quot;);
+        for (uint i = 0; i &lt; user_delegations[to].length; i++) {
+            address delegate = user_delegations[to][i];
+            uint256 amount = user_delegations_value[to][delegate];
+            _transfer(delegate, to, amount);
+            debt_tokens[delegate] -= amount;
+            my_tokens[to] += amount;
+            user_delegations_value[to][delegate] = 0;
+        }
+        delete user_delegations[to];
+        user_delegations[to] = new address[](0);
+        return true;
+    }</code></pre>
+</doc-codeblock></div>
 <doc-anchor-target id="adding-an-image-to-a-dao">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#adding-an-image-to-a-dao">#</doc-anchor-trigger>
