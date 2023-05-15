@@ -73,51 +73,52 @@ The public variables of the contract include the name, description, debugging in
 The contract imports the itoken.sol and newFactory1.sol contracts and declares a DAOFactory variable for the newFactory1 contract.
 The contract is responsible for creating and managing proposals, and tracking voting shares and tokens for voters and YK token holders.
 
-The contract contains several mappings and constants used for tracking and storing data. These include:
+The contract contains several mappings and constants used for tracking and storing data. \
+These include:
 
-proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.
+- proposals: A mapping of proposal IDs to Proposal objects. This is used to store all the proposals created by the contract.
 
-votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.
+- votes: A mapping of voter addresses to proposal IDs to boolean values. This is used to track which addresses have already voted for a given proposal to prevent double voting.
 
-tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.
+- tokens_not_refunded: A mapping of voter addresses to proposal IDs to boolean values. This is used to track whether tokens have been refunded for a proposal to prevent multiple refunds.
 
-token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.
+- token_amount_to_be_refunded: A mapping of voter addresses to proposal IDs to refund amounts. This is used to store the amount of tokens to be refunded for a voter.
 
-voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.
+- voter_shares_to_be_given: A mapping of voter addresses to voter share amounts. This is used to track the number of voter shares to be given to a voter.
 
-yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.
+- yk_shares_to_be_given: A mapping of YK token holder addresses to YK share amounts. This is used to track the number of YK shares to be given to a YK token holder.
 
-voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.
+- voter_token: An instance of the ISUToken contract. This is the contract for the voter token used by the DAO.
 
-yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.
+- yk_token: An instance of the ISUToken contract. This is the contract for the YK token used by the DAO.
 
-CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.
+- CREATE_PROPOSAL_MIN_SHARE: A constant that sets the minimum number of shares required to create a proposal.
 
-VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.
+- VOTING_PERIOD: A constant that sets the duration of the voting period for proposals.
 
-nextProposalId: An integer that tracks the ID for the next proposal to be created.
+- nextProposalId: An integer that tracks the ID for the next proposal to be created.
 
-transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.
+- transferLock: A mapping of addresses to boolean values that tracks the transfer lock status for addresses.
 
 The constructor function initializes the DAO contract with the following parameters:
 
-_dao_name: A string representing the name of the DAO.
+- `_dao_name`: A string representing the name of the DAO.
 
-_imageUrl: A string representing the URL of the DAO's image.
+- `_imageUrl`: A string representing the URL of the DAO's image.
 
-_dao_description: A string representing the description of the DAO.
+- `_dao_description`: A string representing the description of the DAO.
 
-_dao_id: An integer representing the ID of the DAO.
+- `_dao_id`: An integer representing the ID of the DAO.
 
-first_yk: The address of the initial YK token holder.
+- `first_yk`: The address of the initial YK token holder.
 
-yk_token_in: An instance of the ISUToken contract representing the YK token used by the DAO.
+- `yk_token_in`: An instance of the ISUToken contract representing the YK token used by the DAO.
 
-voter_token_in: An instance of the ISUToken contract representing the voter token used by the DAO.
+- `voter_token_in`: An instance of the ISUToken contract representing the voter token used by the DAO.
 
-_factory: An instance of the DAOFactory contract representing the DAO factory used to create the DAO.
+- `_factory`: An instance of the DAOFactory contract representing the DAO factory used to create the DAO.
 
-In the constructor, the factory, dao_name, dao_id, dao_description, yk_token, voter_token, and imageUrl variables are set to their corresponding parameter values. The yk_shares_to_be_given and voter_shares_to_be_given mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.
+In the constructor, the factory, `dao_name`, `dao_id`, `dao_description`, `yk_token`, `voter_token`, and `imageUrl` variables are set to their corresponding parameter values. The `yk_shares_to_be_given` and `voter_shares_to_be_give`n mappings are then initialized with a share value of 1 * 10 ** 18 for the initial YK token holder.
 
 ### newFactory1.sol
 
