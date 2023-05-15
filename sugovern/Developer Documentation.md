@@ -106,11 +106,43 @@ The below function is used to get the address of the current DAO.
 
 The below function is used for transfer processes. The function checks the balance of the owner to make sure there are enough credits and gives an option to have a debt if balance is insufficient and modifies the balance amount accordingly.
 
-![](token_sol_1.png)
+```
+function transfer(address to, uint256 amount) public override (ERC20, ISUToken) returns (bool) {
+        address owner = _msgSender();
+        require(amount <= balanceOf(owner), "not enough in balance ");
+        require(amount <= my_tokens[owner], "cant send debt tokens, you do not have enough tokens ");
+        for (uint i = 0; i < proposal_num; i ++ ){
+            if(transferLock[owner][i] == true){
+                require(false , "have active voting");
+            }
+        }
+        _transfer(owner, to, amount);
+        my_tokens[owner] -= amount;
+        debt_tokens[to] += amount;
+        user_delegations_value[owner][to] += amount;
+        user_delegations[owner].push(to);
+        return true;
+    }
+```
 
 The below function allows the user to take back all of the delegated tokens.
 
-![](token_sol_2.png)
+```
+function delagation_multiple_getback_all(address to) public override returns (bool) {
+        require(_msgSender() == myDAO || _msgSender() == address(this) , "sender is not dao or token");
+        for (uint i = 0; i < user_delegations[to].length; i++) {
+            address delegate = user_delegations[to][i];
+            uint256 amount = user_delegations_value[to][delegate];
+            _transfer(delegate, to, amount);
+            debt_tokens[delegate] -= amount;
+            my_tokens[to] += amount;
+            user_delegations_value[to][delegate] = 0;
+        }
+        delete user_delegations[to];
+        user_delegations[to] = new address[](0);
+        return true;
+    }
+```
 
 ### Adding an Image to a DAO
 
