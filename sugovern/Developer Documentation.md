@@ -48,13 +48,27 @@ This file includes a createToken function which is used to create new tokens and
     }
 ```
 
-![](creator_sol.png)
-
 ### Migrations.sol
 
 This file contains the Migrations contract. The contract checks if the migration request is from the owner of the contract and if so completes the task.
 
-![](migrations_sol.png)
+```
+contract Migrations {
+  address public owner = msg.sender;
+  uint public last_completed_migration;
+
+  modifier restricted() {
+    require(
+      msg.sender == owner,
+      "This function is restricted to the contract's owner"
+    );
+    _;
+  }
+
+  function setCompleted(uint completed) public restricted {
+    last_completed_migration = completed;
+  }
+```
 
 ### newFactory1.sol
 
