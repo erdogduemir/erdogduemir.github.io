@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737496398932">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737496589508">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -32,11 +32,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737496398932" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737496589508" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737496398932" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737496589508" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737496398932" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737496589508" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -189,17 +189,24 @@ yarn reference link: <a href="https://classic.yarnpkg.com/lang/en/docs/install/#
 npm reference link: <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">https://docs.npmjs.com/downloading-and-installing-node-js-and-npm</a></p>
 </li>
 <li><p>Install the dependency packages<br />
-in the project folder navigate to directory using<br />
-&quot;cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui&quot;<br />
-install the dependencies using &quot;npm install&quot; or &quot;yarn install&quot;<br />
+in the project folder navigate to directory using\</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui</code></pre>
+</doc-codeblock></div>
+<p>install the dependencies using &quot;npm install&quot; or &quot;yarn install&quot;<br />
 install next if needed using &quot;npm install next&quot; or &quot;yarn install next&quot;<br />
 Clone the repo from: <a href="https://github.com/Cem-Kaya/SU_Govern">https://github.com/Cem-Kaya/SU_Govern</a></p>
-</li>
-<li><p>To run the front-end:<br />
-in the project folder change the directory using<br />
-&quot;cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui&quot;<br />
-run the front end using &quot;npm run dev&quot; or &quot;yarn dev&quot;</p>
-</li>
+<ul>
+<li>To run the front-end:<br />
+in the project folder change the directory using\</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui</code></pre>
+</doc-codeblock></div>
+<p>run the front end using &quot;npm run dev&quot; or &quot;yarn dev&quot;</p>
+<ul>
 <li><p>Deploying Contracts on TestNet:<br />
 Remix IDE  was used for this.<br />
 Contracts are compiled in this order: 1) token.sol, 2) creator.sol, 3) newDAO1.sol 4) newFactory1.sol.<br />
@@ -207,11 +214,14 @@ Contracts are deployed in this order: 1) creator.sol, 2) newFactory1.sol.<br />
 While deploying newFactory1.sol use the address of creator.sol.</p>
 </li>
 <li><p>Connecting to Front End:<br />
-The files that needs modification are found in the directory below.<br />
-“cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui\pages” In dao.js and index.js, the address of daoFactory should be typed in the statement where the daoFactoryContract is defined. In dao.js, line 114, and in index.js, line 180.<br />
-<strong>In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation. The first contract needs to be deployed using Remix IDE.</strong></p>
+The files that needs modification are found in the directory below.\</p>
 </li>
 </ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">cd .\contract_for_front_end\ui_sol_deneme2\ui_sol_deneme\sol_ui\pages</code></pre>
+</doc-codeblock></div>
+<p>In dao.js and index.js, the address of daoFactory should be typed in the statement where the daoFactoryContract is defined. In dao.js, line 114, and in index.js, line 180.<br />
+<strong>In addition to this, in order to get YK privileges, the first admin of the Top DAO needs to withdraw 1 YK token from TOP DAO. This can be done through the frontend. This is a one time case during creation. The first contract needs to be deployed using Remix IDE.</strong></p>
 <doc-anchor-target id="contracts">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#contracts">#</doc-anchor-trigger>
