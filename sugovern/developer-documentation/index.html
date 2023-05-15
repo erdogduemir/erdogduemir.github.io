@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737500333957">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.737500841145">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=2.4.0.737500333957" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.737500841145" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737500333957" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.737500841145" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737500333957" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.737500841145" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -349,6 +349,45 @@ These include:</p>
 </li>
 </ul>
 <p>Note that the code uses some external functions, such as <code v-pre>stringsEquals</code>, which is a custom implementation of string comparison, and <code v-pre>voter_token.balanceOf</code>, which retrieves the balance of a voter&#x27;s tokens.</p>
+<ul>
+<li><p><code v-pre>getProposalName()</code>: This function retrieves an array of proposal names. It loops through all proposals and adds the name of each proposal to an array called <code v-pre>myprops</code>. The function then returns this array.</p>
+</li>
+<li><p><code v-pre>getDaoid()</code>: This function retrieves the DAO ID. It simply returns the value of the <code v-pre>dao_id</code> variable.</p>
+</li>
+<li><p><code v-pre>has_yk_priviliges(address chk)</code>: This function checks whether the given address has YK (Yieldly Token) privileges. It first checks if the balance of YK tokens of the given address is greater than or equal to 1. If this condition is satisfied, it returns <code v-pre>true</code>. Otherwise, it retrieves the current DAO using the <code v-pre>factory.getCurrentDAO()</code> function and checks whether any of the parent DAOs have a YK balance greater than or equal to 1 * 10^18. If this condition is satisfied, it returns <code v-pre>true</code>. Otherwise, it returns <code v-pre>false</code>.</p>
+</li>
+<li><p><code v-pre>getProposalDescription()</code>: This function retrieves an array of proposal descriptions. It loops through all proposals and adds the description of each proposal to an array called <code v-pre>myprops</code>. The function then returns this array.</p>
+</li>
+<li><p><code v-pre>getProposalVoteNames(uint proposal_idd)</code>: This function retrieves an array of vote names/options for a specific proposal. It retrieves the <code v-pre>options</code> array of the proposal with the given ID and adds each option to an array called <code v-pre>mypropvotes</code>. The function then returns this array.</p>
+</li>
+<li><p><code v-pre>getProposalVoteNumbers(uint proposal_idd)</code>: This function retrieves an array of vote numbers/totals for a specific proposal. It retrieves the <code v-pre>options_num</code> array of the proposal with the given ID and adds each vote number to an array called <code v-pre>mypropvotenums</code>. The function then returns this array.</p>
+</li>
+<li><p><code v-pre>getProposalPower(uint proposal_idd)</code>: This function retrieves the power of a specific proposal. It retrieves the <code v-pre>power</code> variable of the proposal with the given ID and returns it.</p>
+</li>
+<li><p><code v-pre>getProposalType(uint proposal_idd)</code>: This function retrieves the type of a specific proposal. This function is not defined in the provided code.</p>
+</li>
+<li><p><code v-pre>getProposalType(uint proposal_idd)</code>: This function takes a proposal ID as input and returns a string representing the type of the proposal. The string value is obtained from a mapping called <code v-pre>proposals</code> which maps a proposal ID to a struct containing information about the proposal. The function is <code v-pre>view</code> type, meaning it doesn&#x27;t modify the state of the contract and can be called without incurring any gas cost.</p>
+</li>
+<li><p><code v-pre>dao_delegation_single_getback_amount_voter(address from, uint256 amount)</code>: This function allows a voter to retrieve a single token that was delegated to another address. The <code v-pre>from</code> parameter specifies the address from which the token will be retrieved and <code v-pre>amount</code> specifies the number of tokens to be retrieved. The function checks that the number of tokens being retrieved is less than or equal to the number of debt tokens held by the <code v-pre>from</code> address. This function can only be called externally.</p>
+</li>
+<li><p><code v-pre>dao_delegation_single_getback_all_voter(address from)</code>: This function allows a voter to retrieve all tokens that were delegated to another address. The <code v-pre>from</code> parameter specifies the address from which all tokens will be retrieved. This function can only be called externally.</p>
+</li>
+<li><p><code v-pre>dao_delagation_multiple_getback_all_voter()</code>: This function allows a voter to retrieve all tokens that were delegated to multiple addresses. This function can only be called externally. This function has no parameters.</p>
+</li>
+<li><p><code v-pre>dao_clawback_single_voter(address from)</code>: This function allows the DAO to retrieve a single token that was delegated to another address by a voter. The <code v-pre>from</code> parameter specifies the address from which the token will be retrieved. The function checks that the caller has YK (Yield Keeper) privileges. This function can only be called externally.</p>
+</li>
+<li><p><code v-pre>dao_clawback_all_voter()</code>: This function allows the DAO to retrieve all tokens that were delegated to another address by voters. The function checks that the caller has YK (Yield Keeper) privileges. This function can only be called externally.</p>
+</li>
+<li><p><code v-pre>dao_delegation_single_getback_amount_yk(address from, uint256 amount</code>: This function allows the DAO to retrieve a single token that was delegated to another address by a YK. The <code v-pre>from</code> parameter specifies the address from which the token will be retrieved and <code v-pre>amount</code> specifies the number of tokens to be retrieved. The function checks that the number of tokens being retrieved is less than or equal to the number of debt tokens held by the <code v-pre>from</code> address. This function can only be called externally.</p>
+</li>
+<li><p><code v-pre>dao_delegation_single_getback_all_yk(address from)</code>:
+This function allows the DAO to retrieve all tokens that were delegated to another address by a YK. The <code v-pre>from</code> parameter specifies the address from which all tokens will be retrieved. This function can only be called externally.</p>
+</li>
+<li><p><code v-pre>dao_delagation_multiple_getback_all_yk()</code>: This function allows the DAO to retrieve all tokens that were delegated to multiple addresses by a YK. The function checks that the caller has YK (Yield Keeper) privileges. This function can only be called externally. This function has no parameters.</p>
+</li>
+<li><p><code v-pre>dao_clawback_single_yk(address to)</code>: This function allows the DAO to retrieve a single token that was delegated to another address by a YK. The <code v-pre>to</code> parameter specifies the address to which the token will be clawed back. The function checks that the caller has YK.</p>
+</li>
+</ul>
 <doc-anchor-target id="newfactory1sol">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#newfactory1sol">#</doc-anchor-trigger>
